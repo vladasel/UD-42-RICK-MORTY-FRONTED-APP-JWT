@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { TokenStorageService } from './_services/token-storage.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './_services/auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -11,61 +12,79 @@ import { AuthService } from './_services/auth.service';
 })
 export class AppComponent {
   title = 'ricky_morty';
-  roles: string[] = [];
+
+  isLoginFailed = false;
+  isLoggedInView = false;
+  errorMessage = '';
+
+  roles: string | undefined;
+
+
   isLoggedIn = false;
   showAdminBoard = false;
-  username?: string;
-  isLogginFailed =false;
-  errorMessage='';
-
+  showModeratorBoard = false;
+  usernameView?: string;
 
   form: any = {
     username: null,
     password: null
   };
 
-  constructor(private tokenStorageService: TokenStorageService,private authService:AuthService) { }
+  constructor(private tokenStorageService: TokenStorageService, private authService: AuthService, public router: Router) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
     if (this.isLoggedIn) {
       const user = this.tokenStorageService.getUser();
-      this.roles = user.roles;
+      const token = this.tokenStorageService.getToken();
+      this.usernameView = JSON.stringify(user).replace(/['"]+/g, ''); // faig un regex per treure-li les cometes
+      this.roles = this.tokenStorageService.getRoles()?.toString().replace(/['"]+/g, '');
+      console.log("en app.components.ts username "+this.usernameView);
+      console.log("en app.components.ts roles "+this.roles);
 
-      this.showAdminBoard = this.roles.includes("ROLE_ADMIN");
-
-
-      this.username = user.username;
     }
   }
 
   logout(): void {
     this.tokenStorageService.signOut();
-    window.location.href="";
+    window.location.href = "";
+    this.isLoggedIn = false;
+    this.roles = '';
 
   }
 
   onSubmit(): void {
 
+    this.authService.login(this.form.username, this.form.password).subscribe(
+      data => {
+        this.usernameView = this.form.username;
+        this.isLoggedInView = true;
 
-    this.authService.login(this.form.username,this.form.password).subscribe(
-      data =>{
-        this.tokenStorageService.saveToken(data.accessToken);
-        this.tokenStorageService.saveUser(data);
+        this.tokenStorageService.saveToken(data["token"]);
+        this.tokenStorageService.saveUser(this.form.username);
+        console.log(this.tokenStorageService.saveUser(this.form.username));
 
-        this.isLogginFailed =false;
-        this.isLoggedIn=true;
-        this.roles=this.tokenStorageService.getUser().roles;
-        this.reloadPage();
+
+        setTimeout(() => {
+          this.usernameView = this.form.username;
+
+
+          this.isLoginFailed = false;
+          this.isLoggedIn = true;
+
+          window.location.reload();
+        },
+          2000);
+
       },
-      err=>{
-        this.errorMessage =err.error.message;
-        this.isLogginFailed=true;
+      err => {
+        this.errorMessage = err.error.message;
+        this.isLoginFailed = true;
       }
     );
   }
 
-  reloadPage():void{
+  reloadPage(): void {
     window.location.reload();
   }
 }

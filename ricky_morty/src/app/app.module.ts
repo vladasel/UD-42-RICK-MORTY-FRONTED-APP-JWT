@@ -8,7 +8,7 @@ import { CharactersComponent } from './characters/characters.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
-
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {HttpClientModule,HttpClient} from '@angular/common/http';
 import { SeeMoreComponent } from './see-more/see-more.component';
 import { AddCharacterComponent } from './add-character/add-character.component';
@@ -20,7 +20,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { BoardAdminComponent } from './board-admin/board-admin.component';
 import { BoardUserComponent } from './board-user/board-user.component';
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
-
+import { AuthInterceptor } from './_helpers/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -46,7 +46,7 @@ import { authInterceptorProviders } from './_helpers/auth.interceptor';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [authInterceptorProviders],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

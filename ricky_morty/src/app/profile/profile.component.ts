@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenStorageService } from '../_services/token-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -7,15 +8,30 @@ import { TokenStorageService } from '../_services/token-storage.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  usernameView?: string;
-  currentuser: any;
 
-  constructor(private token: TokenStorageService) { }
+  roles: string | undefined;
+
+  username = '';
+  token : string | null | undefined;
+
+  constructor(private tokenStorage: TokenStorageService, public router: Router) { }
 
   ngOnInit(): void {
-    this.currentuser = this.token.getUser();
-   // this.usernameView = JSON.stringify(this.currentuser).replace(/['"]+/g, '');
-    console.log(this.currentuser.roles);
+    this.token = this.tokenStorage.getToken();
+    this.username = this.tokenStorage.getUser();
+    console.log(this.token);
+    console.log("user"+JSON.stringify(JSON.stringify(this.username).replace(/['"]+/g, '')));
+
+    if (this.token == null)
+    {
+      this.token = "NOT_FOUND";
+    }
+    else
+    {
+      this.roles = this.tokenStorage.getRoles()?.toString().replace(/['"]+/g, '');
+      console.log("reoles ->"+this.roles);
+
+    }
   }
 
 }

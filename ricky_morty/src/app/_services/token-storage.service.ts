@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
+import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
+const ROLES_KEY = 'auth-roles';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenStorageService {
 
-  constructor() { }
+  constructor(private authService: AuthService, public router: Router) { }
 
   signOut(): void {
     window.sessionStorage.clear();
@@ -27,6 +30,8 @@ export class TokenStorageService {
   public saveUser(user: any): void {
     window.sessionStorage.removeItem(USER_KEY);
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+    this.setRoles();
+
   }
 
   public getUser(): any {
@@ -36,6 +41,29 @@ export class TokenStorageService {
       return JSON.parse(user);
     }
     return {};
+  }
+
+
+  public setRoles() {
+
+    const user = this.getUser().replace(/['"]+/g, '');
+
+
+    this.authService.findRole(user).subscribe(
+      data => {
+        window.sessionStorage.removeItem(ROLES_KEY);
+        window.sessionStorage.setItem(ROLES_KEY, JSON.stringify(data["role"]));
+
+
+      },
+      err => {
+        console.log("Couldn't find role information")
+      }
+    )
+  }
+
+  public getRoles() {
+    return window.sessionStorage.getItem(ROLES_KEY);
   }
 
 }

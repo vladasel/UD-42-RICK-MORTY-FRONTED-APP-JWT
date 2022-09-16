@@ -1,10 +1,10 @@
-<div class="container" *ngIf="currentuser;">
+<div class="container"   *ngIf="token != 'NOT_FOUND'">
   <br><br>
   <div class="card">
     <div class="card-body">
-      <h1>NAME: {{currentuser.username}}</h1>
-      <h5>PASSWORD:</h5>
-      <h5>ROLE:{{currentuser.role}}</h5>
+      <h1>NAME: {{username}}</h1>
+      <h5>TOKEN: </h5>{{token}}
+      <h5>ROLE:</h5>{{roles}}
     </div>
   </div>
 

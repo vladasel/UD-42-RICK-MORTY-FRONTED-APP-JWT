@@ -26,12 +26,10 @@ export class AuthService {
     return this.http.post(AUTH_API + 'login', JSON.stringify(this.user), { headers: { 'Content-Type': 'application/json' } });
   }
 
-  /*register(username: string, email: string, password: string): Observable<any> {
-    return this.http.post(AUTH_API + 'register', {
-      username,
-      email,
-      password
-    }, httpOptions);
-  }*/
+  findRole(username: string): Observable<any> {
+    return this.http.get(AUTH_API + "users/" + username);
+  }
+
+
 
 }
