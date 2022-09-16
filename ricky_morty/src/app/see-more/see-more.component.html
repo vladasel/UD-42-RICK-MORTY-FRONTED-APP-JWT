@@ -1,0 +1,22 @@
+<div class="container">
+  <br><br>
+  <div class="card">
+    <div class="card-body">
+      <img src="{{res.image}}">
+      <p>ID: {{this.id}}</p>
+      <p>Name: {{res.name}}</p>
+      <p>Status: {{res.status}}</p>
+      <p>Species: {{res.species}}</p>
+      <p>Gender: {{res.gender}}</p>
+      <p>Origin: {{res.origin}}</p>
+      <br><br><br>
+      <button routerLink="/update" [queryParams]="{id: res.id}" class="btn btn-warning " type="button">Update</button>
+
+
+    </div>
+
+
+  </div>
+
+
+</div>

@@ -1,0 +1,35 @@
+<div class="container">
+  <br><br><br>
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="add_form">
+        <div class="mb-3 ">
+          <label for="name" class="form-label">Name</label>
+          <input formControlName="name" type="text" class="form-control" id="name">
+        </div>
+
+        <div class="mb-3">
+          <label for="status" class="form-label">Status</label>
+          <input formControlName="status" type="text" id="status" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="species" class="form-label">Species</label>
+          <input formControlName="species" type="text" id="species" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="gender" class="form-label">Gender</label>
+          <input formControlName="gender" type="text" id="gender" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="origin" class="form-label">Origin</label>
+          <input formControlName="origin" type="text" id="origin" class="form-control">
+        </div>
+
+
+        <button  (click)=saveCharac(); type="submit" class="btn btn-primary" >Add</button>
+      </form>
+    </div>
+  </div>
+
+
+</div>

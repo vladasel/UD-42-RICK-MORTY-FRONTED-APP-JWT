@@ -1,0 +1,38 @@
+<div class="container">
+  <br><br><br>
+  <div class="card">
+    <div class="card-body">
+      <form>
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" value="{{res.name}}">
+        </div>
+        <div class="mb-3">
+          <label for="status" class="form-label">Status</label>
+          <input type="text" id="status" class="form-control" value="{{res.status}}">
+        </div>
+        <div class="mb-3">
+          <label for="species" class="form-label">Species</label>
+          <input type="text" id="species" class="form-control" value="{{res.species}}">
+        </div>
+        <div class="mb-3">
+          <label for="gender" class="form-label">Gender</label>
+          <input type="text" id="gender" class="form-control" value="{{res.gender}}">
+        </div>
+        <div class="mb-3">
+          <label for="origin" class="form-label">Origin</label>
+          <input type="text" id="origin" class="form-control" value="{{res.origin}}">
+        </div>
+        <div class="mb-3">
+          <label for="image" class="form-label">Image</label>
+          <input type="text" id="image" class="form-control" value="{{res.image}}">
+        </div>
+
+        <button type="submit" class="btn btn-primary" (click)="saveC()">Update</button>
+      </form>
+    </div>
+  </div>
+
+
+</div>
+

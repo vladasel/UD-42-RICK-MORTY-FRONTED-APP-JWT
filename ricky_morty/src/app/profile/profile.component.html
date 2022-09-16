@@ -1,0 +1,16 @@
+<div class="container" *ngIf="currentuser;">
+  <br><br>
+  <div class="card">
+    <div class="card-body">
+      <h1>NAME: {{currentuser.user}}</h1>
+      <h5>PASSWORD:</h5>
+      <ul>
+        <li *ngFor="let role of currentuser.roles">
+          <h5>ROLE: {{role}}</h5>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</div>
