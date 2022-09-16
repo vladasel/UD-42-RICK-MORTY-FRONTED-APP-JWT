@@ -39,8 +39,7 @@ export class AppComponent {
       const token = this.tokenStorageService.getToken();
       this.usernameView = JSON.stringify(user).replace(/['"]+/g, ''); // faig un regex per treure-li les cometes
       this.roles = this.tokenStorageService.getRoles()?.toString().replace(/['"]+/g, '');
-      console.log("en app.components.ts username "+this.usernameView);
-      console.log("en app.components.ts roles "+this.roles);
+
 
     }
   }
@@ -65,7 +64,7 @@ export class AppComponent {
         console.log(this.tokenStorageService.saveUser(this.form.username));
 
 
-        setTimeout(() => {
+
           this.usernameView = this.form.username;
 
 
@@ -73,8 +72,7 @@ export class AppComponent {
           this.isLoggedIn = true;
 
           window.location.reload();
-        },
-          2000);
+
 
       },
       err => {
